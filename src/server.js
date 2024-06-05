@@ -36,7 +36,7 @@ app.use('*', (req, res)=>{
     const PORT =evn(ENV_VARS.PORT, 3000);
     // process.env.PORT || 3000;
     console.log('PORT', PORT);
-    app.use((err,req, res, next)=>{
+    app.use((err,req, res)=>{
 res.status(500).join({message:'Someting went wrong'});
     });
     app.listen(PORT, ()=>{
