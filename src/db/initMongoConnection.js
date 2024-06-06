@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import {evn} from "../utils/evn.js";
-import { MONGO_VARS } from "../constans/index.js";
+import {MONGO_VARS } from "../constans/index.js";
 
 
 export const initMongoDb = async () => {
