@@ -4,8 +4,8 @@ import {getAllContactsControler, getContactByIdControler} from '../controllers/s
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 
 const router = Router();
-router.get('/contacts',ctrlWrapper(getAllContactsControler));
+router.get('/contact',ctrlWrapper(getAllContactsControler));
 
-router.get('/contacts/:contactId',ctrlWrapper(getContactByIdControler));
+router.get('/contact/:contactId',ctrlWrapper(getContactByIdControler));
 
 export default router;
