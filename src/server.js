@@ -19,6 +19,9 @@ app.get('/contacts',async (req, res) => {
 const contacts = await getContacts();
 return res.status(200).json(contacts);
 });
+app.get('/contact', (req, res) => {
+    res.status(200).json({ message: 'This is the contact endpoint' });
+});
 app.get('/contacts/:contactId',async (req, res) => {
     const {contactId} = req.params;
     const contact = await getContactById(contactId);
