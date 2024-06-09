@@ -17,7 +17,7 @@ app.use(express.json());
 app.use(cors());
 app.use(pino({transport:{target:'pino-pretty'}}));
 
-app.use(contactsRouter);
+app.use('/api',contactsRouter);
 app.use('*',notRoundMidlewer);
 app.use(errorHandlerMiddlewere);
 app.listen(PORT, () => {
