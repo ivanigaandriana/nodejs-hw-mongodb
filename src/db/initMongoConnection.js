@@ -7,7 +7,7 @@ export const initMongoDb = async () => {
         const password = env(MONGO_VARS.MONGODB_PASSWORD);
         const url = env(MONGO_VARS.MONGODB_URL);
         const dbName = env(MONGO_VARS.MONGODB_DB, '');
-    await mongoose.connect(`mongodb+srv://${user}:${password}@${url}/${dbName}/?retryWrites=true&w=majority`,);
+    await mongoose.connect(`mongodb+srv://${user}:${password}@${url}/${dbName}?retryWrites=true&w=majority`,);
     console.log('Connected to MongoDB');
     }catch(error){
         console.log(error);
