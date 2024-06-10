@@ -9,7 +9,7 @@ export const getContactById = async (contactId) => {
     return contact;
 };
 
-export const createrContacts = async (payload) => {
+export const createContacts = async (payload) => {
     const contact = await Contact.create(payload);
     return contact;
 };
@@ -17,7 +17,7 @@ export const deleteContact = async (contactId) => {
     const contact = await Contact.findByIdAndDelete(contactId);
     return contact;
 };
-export const updatesContact = async (id, payload, options={}) => {
+export const updateContact = async (id, payload, options={}) => {
     const rawContact = await Contact.findOneAndUpdate({_id:id}, payload, {new: true,includeResultMetadata: true,...options});
 if(!rawContact || rawContact.value) return null;
 
