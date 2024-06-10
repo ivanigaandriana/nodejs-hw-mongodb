@@ -3,13 +3,13 @@ import cors from 'cors';
 import pino from 'pino-http';
 import {env} from './utils/evn.js';
 import { ENV_VARS } from './constans/index.js';
-import { initMongoDb } from './db/initMongoConnection.js';
+// import { initMongoDb } from './db/initMongoConnection.js';
 import {getContacts, getContactById} from './services/contacts.js';
-const PORT = env(ENV_VARS.PORT, 3000);
-console.log('PORT',PORT);
+const PORT =Number( env(ENV_VARS.PORT, 3000));
+
 export const startServer=()=>{
 
-initMongoDb();
+// initMongoDb();
 const app = express();
 app.use(express.json());
 app.use(cors());
