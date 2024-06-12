@@ -1,14 +1,10 @@
-import { initMongoDb } from './db/initMongoConnection.js';
 import { startServer } from './server.js';
+import { initMongoDb } from './db/initMongoConnection.js';
 
-const bootstrap = async () => {
-    try {
-        await initMongoDb();
-        startServer();
-    } catch (error) {
-        console.error('Failed to start the application', error);
-    }
+
+const bootstrap = async() => {
+    await initMongoDb();
+    startServer();
 };
-
 bootstrap();
 
