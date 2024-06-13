@@ -9,4 +9,4 @@ import {Schema, model} from "mongoose";
         timestamps: true, versionKey: false,});
 
 
-export const Contact = model('contacts', contactModel);
+export const ContactsCollection = model('contacts', contactModel);

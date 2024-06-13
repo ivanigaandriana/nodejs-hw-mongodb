@@ -5,6 +5,6 @@ const errorHandlerMiddlewere = (err, req, res) => {
         return;
     }
 
-    res.status(500).json({ message: err.message });
+    res.status(500).json({ status: 500, message: 'Something went wrong', data: err });
 };
 export default errorHandlerMiddlewere;
