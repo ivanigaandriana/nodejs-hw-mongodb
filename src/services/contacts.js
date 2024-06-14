@@ -1,6 +1,6 @@
 // import createHttpError from "http-errors";
 import{Contact }from "../db/Models/Contact.js";
-export const getContacts = async () => {
+export const getAllContacts = async () => {
    const contacts = await Contact.find({});
    return contacts;
 };
