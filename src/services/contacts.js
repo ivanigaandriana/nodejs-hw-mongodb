@@ -1,8 +1,21 @@
 // import createHttpError from "http-errors";
+import { SORT_ORDER } from "../constans/index.js";
 import{ContactsCollection }from "../db/Models/Contact.js";
-export const getAllContacts = async () => {
-   const contacts = await ContactsCollection.find({});
-   return contacts;
+import { calculatePaginationData } from "../utils/calculatePaginationData.js";
+export const getAllContacts = async ({page=1,
+    perPage=10,
+    sortBy='_id',
+    sortOrder=SORT_ORDER.ASC}) => {
+    const limit=perPage;
+    const skip= (page-1)*perPage;
+    const contactsQuery = ContactsCollection.find();
+//     const contactsCount = await ContactsCollection.find().merge(contactsQuery).countDocuments();
+//    const contacts = await contactsQuery.skip(skip).limit(limit).sort({[sortBy]:sortOrder}).exec();
+//    const paginationData = calculatePaginationData( contactsCount,perPage,page);
+   const [contactsCount, contacts] = await Promise.all([ContactsCollection.find().merge(contactsQuery).countDocuments(),
+   contactsQuery.skip(skip).limit(limit).sort({[sortBy]:sortOrder}).exec()]);
+   const paginationData = calculatePaginationData( contactsCount,perPage,page);
+   return {contacts, ...paginationData};
 };
 export const getContactById = async (contactId) => {
     const contact = await ContactsCollection.findById(contactId);
