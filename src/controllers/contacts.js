@@ -76,13 +76,14 @@ export const patchContactController = async (req, res, next) => {
     if (!Types.ObjectId.isValid(contactId)) {
         return next(createHttpError(400, 'Invalid contact id!'));
     }
-    const result = await updateContact(contactId, req.body);
-    if (!result) {
-        return next(createHttpError(404, 'Contact Not found'));
+
+    try {
+        const result = await updateContact(contactId, req.body);
+        if (!result) {
+            return next(createHttpError(404, 'Contact not found'));
+        }
+        res.json({ status: 200, message: "Successfully patched contact!", data: result });
+    } catch (error) {
+        next(error);
     }
-    res.status(200).json({
-        status: 200,
-        message: "Successfully patched contact!",
-        data: result
-    });
 };
