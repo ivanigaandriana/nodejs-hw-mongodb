@@ -1,5 +1,5 @@
 import createHttpError from 'http-errors';
-import { Types } from 'mongoose';
+// import { Types } from 'mongoose';
 import {
   getAllContacts,
   getContactById,
@@ -9,11 +9,13 @@ import {
 } from '../services/contacts.js';
 import {parsePaginationParams} from '../utils/parsePaginationParams.js';
 import { parseSortParams } from '../utils/parseSortingParams.js';
+import {parseFilterParams} from '../utils/parseFilterParams.js';
 
 export const getAllContactsController = async (req, res) => {
     const { page, perPage } =parsePaginationParams(req.query);
     const {sortBy, sortOrder} =parseSortParams(req.query);
-    const contacts = await getAllContacts({ page, perPage, sortBy, sortOrder });
+    const filter = parseFilterParams(req.query);
+    const contacts = await getAllContacts({ page, perPage, sortBy, sortOrder ,filter});
     res.status(200).json({
         status: 200,
         message: 'Successfully found contacts!',
@@ -46,9 +48,9 @@ export const createrContactsController = async (req, res) => {
 
 export const deleteContactController = async (req, res, next) => {
     const { contactId } = req.params;
-    if (!Types.ObjectId.isValid(contactId)) {
-        return next(createHttpError(400, 'Invalid contact id!'));
-    }
+    // if (!Types.ObjectId.isValid(contactId)) {
+    //     return next(createHttpError(400, 'Invalid contact id!'));
+    // }
     const contact = await deleteContact(contactId);
     if (!contact) {
         return next(createHttpError(404, 'Contact Not found'));
@@ -58,9 +60,9 @@ export const deleteContactController = async (req, res, next) => {
 
 export const upsertContactController = async (req, res, next) => {
     const { contactId } = req.params;
-    if (!Types.ObjectId.isValid(contactId)) {
-        return next(createHttpError(400, 'Invalid contact id!'));
-    }
+    // if (!Types.ObjectId.isValid(contactId)) {
+    //     return next(createHttpError(400, 'Invalid contact id!'));
+    // }
     const { isNew, contact } = await updateContact(contactId, req.body, { upsert: true });
     if (!contact) {
         return next(createHttpError(404, 'Contact not found'));
@@ -75,9 +77,9 @@ export const upsertContactController = async (req, res, next) => {
 
 export const patchContactController = async (req, res, next) => {
     const { contactId } = req.params;
-    if (!Types.ObjectId.isValid(contactId)) {
-        return next(createHttpError(400, 'Invalid contact id!'));
-    }
+    // if (!Types.ObjectId.isValid(contactId)) {
+    //     return next(createHttpError(400, 'Invalid contact id!'));
+    // }
 
     try {
         const result = await updateContact(contactId, req.body);

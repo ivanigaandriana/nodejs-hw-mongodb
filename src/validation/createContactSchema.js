@@ -26,14 +26,4 @@ export const createContactSchema = Joi.object({
     contactType: Joi.string().valid('personal', 'home', 'work').required(),
 
 });
-const data = {
-    name: 'Jouy',
-    email: 'bqV6Z@example.com',
-    phone: '123456789',
-      contactType: 'personal',
-};
-const result = createContactSchema.validate(data);
-if(result.error) {
-    console.log(result.error);
-}else{
-    console.log('data is valid');}
+
