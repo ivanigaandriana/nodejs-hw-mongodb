@@ -9,17 +9,17 @@ export const updateContactSchema = Joi.object({
 
     }),
     email: Joi.string().min(3).max(20).email().messages({
-        'any.required': 'Name is required',
-        'string.base': 'Name must be a string',
-        'string.min': 'Name must be at least {#limit} characters long',
-        'string.max': 'Name must be at most {#limit} characters long',
+        'any.required': 'Email is required',
+        'string.base': 'Email must be a string',
+        'string.min': 'Email must be at least {#limit} characters long',
+        'string.max': 'Email must be at most {#limit} characters long',
 
     }),
-    phone: Joi.string().min(3).max(20).messages({
-        'any.required': 'Name is required',
-        'string.base': 'Name must be a string',
-        'string.min': 'Name must be at least {#limit} characters long',
-        'string.max': 'Name must be at most {#limit} characters long',
+    phoneNumber: Joi.string().min(3).max(20).messages({
+     'any.required': 'PhoneNumber is required',
+        'string.base': 'PhoneNumber must be a string',
+        'string.min': 'PhoneNumber must be at least {#limit} characters long',
+        'string.max': 'PhoneNumber must be at most {#limit} characters long',
 
     }),
     isFavourite: Joi.boolean(),
