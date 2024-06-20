@@ -11,7 +11,8 @@ import {parsePaginationParams} from '../utils/parsePaginationParams.js';
 import { parseSortParams } from '../utils/parseSortingParams.js';
 import {parseFilterParams} from '../utils/parseFilterParams.js';
 
-export const getAllContactsController = async (req, res) => {
+export const getAllContactsController = async (req, res, next) => {
+    try{
     const { page, perPage } =parsePaginationParams(req.query);
     const {sortBy, sortOrder} =parseSortParams(req.query);
     const filter = parseFilterParams(req.query);
@@ -20,10 +21,12 @@ export const getAllContactsController = async (req, res) => {
         status: 200,
         message: 'Successfully found contacts!',
         data: contacts
-    });
+    });}
+    catch (error) {next(error);}
 };
 
 export const getContactByIdController = async (req, res, next) => {
+    try{
     const { contactId } = req.params;
 
     const contact = await getContactById(contactId);
@@ -34,19 +37,23 @@ export const getContactByIdController = async (req, res, next) => {
         status: 200,
         message: `Successfully found contact with id ${contactId}!`,
         data: contact
-    });
+    });}
+    catch (error) {next(error);}
 };
 
-export const createrContactsController = async (req, res) => {
+export const createrContactsController = async (req, res, next) => {
+    try{
     const contact = await createContacts(req.body);
     res.status(201).json({
         status: 201,
         message: "Successfully created a contact!",
         data: contact
-    });
+    });}
+    catch (error) {next(error);}
 };
 
 export const deleteContactController = async (req, res, next) => {
+    try{
     const { contactId } = req.params;
     // if (!Types.ObjectId.isValid(contactId)) {
     //     return next(createHttpError(400, 'Invalid contact id!'));
@@ -55,10 +62,12 @@ export const deleteContactController = async (req, res, next) => {
     if (!contact) {
         return next(createHttpError(404, 'Contact Not found'));
     }
-    res.status(204).send();
+    res.status(204).send();}
+    catch (error) {next(error);}
 };
 
 export const upsertContactController = async (req, res, next) => {
+    try{
     const { contactId } = req.params;
     // if (!Types.ObjectId.isValid(contactId)) {
     //     return next(createHttpError(400, 'Invalid contact id!'));
@@ -72,16 +81,18 @@ export const upsertContactController = async (req, res, next) => {
         status,
         message: `Successfully upserted a contact!`,
         data: contact,
-    });
+    });}
+    catch (error) {next(error);}
 };
 
 export const patchContactController = async (req, res, next) => {
+    try{
     const { contactId } = req.params;
     // if (!Types.ObjectId.isValid(contactId)) {
     //     return next(createHttpError(400, 'Invalid contact id!'));
     // }
 
-    try {
+    
         const result = await updateContact(contactId, req.body);
         if (!result) {
             return next(createHttpError(404, 'Contact not found'));

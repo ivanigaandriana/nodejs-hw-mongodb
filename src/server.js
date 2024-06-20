@@ -4,9 +4,12 @@ import pino from 'pino-http';
 import {env} from './utils/evn.js';
 import { ENV_VARS } from './constans/index.js';
 // import { initMongoDb } from './db/initMongoConnection.js';
-import contactsRouter from './routers/contacts.js';
+import rootRouter from './routers/index.js';
 import  errorHandlerMiddleware from './middlewares/errorHandlerMiddlever.js';
 import  notFoundMiddleware from './middlewares/notRoundMidlewer.js';
+import cookieParser from 'cookie-parser';
+
+
 const PORT =Number( env(ENV_VARS.PORT, 3000));
 // console.log('PORT',PORT);
 export const startServer=()=>{
@@ -15,9 +18,10 @@ export const startServer=()=>{
 const app = express();
 app.use(express.json());
 app.use(cors());
+app.use(cookieParser());
 app.use(pino({transport:{target:'pino-pretty'}}));
 
-app.use(contactsRouter);
+app.use(rootRouter);
 app.use('*',notFoundMiddleware);
 app.use(errorHandlerMiddleware);
 app.listen(PORT, () => {
