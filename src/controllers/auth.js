@@ -14,21 +14,13 @@ const setupCookies = (res, session) => {
 export const registerUserController = async (req, res) => {
     const user = await createUser(req.body);
     res.json({
-        status: 200,
+        status: 201,
         message: "User is created!",
         data: { user },
     });
 };
 
-// export const loginUserController = async (req, res) => {
-//     const session = await loginUser(req.body);
-//     setupCookies(res, session);
-//     res.json({
-//         status: 200,
-//         message: "User is logged in!",
-//         data: { accessToken: session.accessToken },
-//     });
-// };
+
 export const loginUserController = async (req, res) => {
     try {
         console.log('Login request body:', req.body);
