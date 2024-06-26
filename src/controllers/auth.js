@@ -11,16 +11,27 @@ const setupCookies = (res, session) => {
     });
 };
 
-export const registerUserController = async (req, res) => {
-    const user = await createUser(req.body);
-    res.json({
+// export const registerUserController = async (req, res) => {
+//     const user = await createUser(req.body);
+//     res.json({
+//         status: 201,
+//         message: "User is created!",
+//         data: { user },
+//     });
+// };
+
+export const registerUserController = async (req, res, next) => {
+    try {
+      const newUser = await createUser(req.body);
+      res.status(201).json({
         status: 201,
         message: "User is created!",
-        data: { user },
-    });
-};
-
-
+        data: newUser,
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
 export const loginUserController = async (req, res) => {
     try {
         console.log('Login request body:', req.body);
