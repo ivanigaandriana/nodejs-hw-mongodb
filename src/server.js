@@ -2,7 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import pino from 'pino-http';
 import {env} from './utils/evn.js';
-import { ENV_VARS } from './constans/index.js';
+import { ENV_VARS, UPLOAD_DIR } from './constans/index.js';
 // import { initMongoDb } from './db/initMongoConnection.js';
 import rootRouter from './routers/index.js';
 import  errorHandlerMiddleware from './middlewares/errorHandlerMiddlever.js';
@@ -20,6 +20,8 @@ app.use(express.json());
 app.use(cors());
 app.use(cookieParser());
 app.use(pino({transport:{target:'pino-pretty'}}));
+
+app.use('/uploads',express.static(UPLOAD_DIR));
 
 app.use(rootRouter);
 app.use('*',notFoundMiddleware);

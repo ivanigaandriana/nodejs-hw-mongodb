@@ -8,7 +8,7 @@ export const updateContactSchema = Joi.object({
         'string.max': 'Name must be at most {#limit} characters long',
 
     }),
-    email: Joi.string().min(3).max(20).email().messages({
+    email: Joi.string().min(3).max(30).email().messages({
         'any.required': 'Email is required',
         'string.base': 'Email must be a string',
         'string.min': 'Email must be at least {#limit} characters long',
@@ -24,5 +24,7 @@ export const updateContactSchema = Joi.object({
     }),
     isFavourite: Joi.boolean(),
     contactType: Joi.string().valid('personal', 'home', 'work'),
+    userId: Joi.string(),
+    photo: Joi.string(),
 
 });

@@ -48,18 +48,23 @@ export const getAllContactsController = async (req, res, next) => {
 
   export const createrContactsController = async (req, res, next) => {
     try {
+        const { body, file } = req; // Отримуємо body та file з запиту
         const userId = req.user._id;
-      const contact = await createContacts( {payload: req.body, userId } );
-      res.status(201).json({
-        status: 201,
-        message: "Successfully created a contact!",
-        data: contact
-      });
-    } catch (error) {
-      next(error);
-    }
-  };
 
+        // Логування для перевірки отриманих даних
+        console.log('File:', file);
+        console.log('Body:', body);
+
+        const contact = await createContacts({ ...body, photo: file }, userId);
+        res.status(201).json({
+            status: 201,
+            message: "Successfully created a contact!",
+            data: contact
+        });
+    } catch (error) {
+        next(error);
+    }
+};
   export const deleteContactController = async (req, res, next) => {
     try {
       const { contactId } = req.params;

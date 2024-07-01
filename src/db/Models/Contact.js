@@ -5,7 +5,8 @@ import {Schema, model} from "mongoose";
     email:{type: String, required: false,},
     isFavourite:{type: Boolean, default: false,},
     contactType:{type: String, required: true, default: "personal", enum: ["personal", "home", "work"]},
-    userId: { type: Schema.Types.ObjectId, required: true }},
+    userId: { type: Schema.Types.ObjectId, required: true },
+    photo: { type: String},},
     {
         timestamps: true, versionKey: false,});
 
