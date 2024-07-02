@@ -79,8 +79,8 @@ export const requestResetToken = async (email) => {
             throw createHttpError(404, 'User not found');
         }
 
-        const resetToken = jwt.sign(
-            { sub: user._id, email },
+        const resetToken = jwt.sign({
+            sub: user._id, email },
             env(ENV_VARS.JWT_SECRET),
             { expiresIn: '15m' }
         );
@@ -124,5 +124,5 @@ if(!user){
     throw createHttpError(404, 'User not found');
 }
 const haschedPassword = await bcrypt.hash(payload.password, 10);
-await UserCollection.updateOne({ _id: entries.sub }, { password: haschedPassword });
+await UserCollection.updateOne({ _id: user._id }, { password: haschedPassword });
 };

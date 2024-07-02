@@ -10,6 +10,7 @@ import {
 import {parsePaginationParams} from '../utils/parsePaginationParams.js';
 import { parseSortParams } from '../utils/parseSortingParams.js';
 import {parseFilterParams} from '../utils/parseFilterParams.js';
+import  {createContactSchema} from '../validation/createContactSchema.js';
 
 export const getAllContactsController = async (req, res, next) => {
     try {
@@ -54,6 +55,24 @@ export const getAllContactsController = async (req, res, next) => {
         // Логування для перевірки отриманих даних
         console.log('File:', file);
         console.log('Body:', body);
+
+        // Валідатор схеми Joi
+        const { error } = createContactSchema.validate(body);
+        if (error) {
+            return res.status(400).json({
+                status: 400,
+                message: "Bad request",
+                data: {
+                    message: "Bad request",
+                    errors: error.details.map((err) => ({
+                        message: err.message,
+                        path: err.path,
+                        type: err.type,
+                        context: err.context
+                    })),
+                },
+            });
+        }
 
         const contact = await createContacts({ ...body, photo: file }, userId);
         res.status(201).json({
