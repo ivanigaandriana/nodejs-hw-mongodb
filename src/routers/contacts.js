@@ -10,13 +10,14 @@ import  {upload } from '../middlewares/uploads.js';
 import { updateContactSchema } from '../validation/updateContactSchema.js';
 import { authenticate } from '../middlewares/authenticate.js';
 const contactsRouter = Router();
-contactsRouter.use('/', authenticate);
+
 contactsRouter.use('/:contactId',validateMongoId('contactId'));
+contactsRouter.use('/', authenticate);
 contactsRouter.get('/',ctrlWrapper(getAllContactsController));
 
 contactsRouter.get('/:contactId',ctrlWrapper(getContactByIdController));
 contactsRouter.post('/',
-    // validateBody(createContactSchema),
+    validateBody(createContactSchema),
     upload.single('photo'),
 ctrlWrapper(createrContactsController));
 contactsRouter.delete('/:contactId',ctrlWrapper(deleteContactController));

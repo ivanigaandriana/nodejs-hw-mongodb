@@ -32,7 +32,9 @@ export const getAllContacts = async ({
 
   export const createContacts = async (payload, userId) => {
     const { photo, ...restPayload } = payload;
+
     const photoUrl = photo ? await saveFile(photo) : null;
+
 
     const contact = await ContactsCollection.create({
         ...restPayload,
@@ -48,6 +50,14 @@ export const getAllContacts = async ({
     return contact;
   };
 
+  // export const updateContact = async (contactId, updateData, userId) => {
+  //   const contact = await ContactsCollection.findOneAndUpdate(
+  //     { _id: contactId,  userId },
+  //     { $set: updateData },
+  //     { new: true, runValidators: true }
+  //   );
+  //   return contact;
+  // };
   export const updateContact = async (contactId, payload) => {
     const { photo, ...restPayload } = payload;
     const updateFields = { ...restPayload };
