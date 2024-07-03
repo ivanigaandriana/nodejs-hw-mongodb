@@ -16,7 +16,7 @@ contactsRouter.get('/',ctrlWrapper(getAllContactsController));
 
 contactsRouter.get('/:contactId',ctrlWrapper(getContactByIdController));
 contactsRouter.post('/',
-    validateBody(createContactSchema),
+    // validateBody(createContactSchema),
     upload.single('photo'),
 ctrlWrapper(createrContactsController));
 contactsRouter.delete('/:contactId',ctrlWrapper(deleteContactController));

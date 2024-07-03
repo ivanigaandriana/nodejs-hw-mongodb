@@ -1,5 +1,6 @@
 import createHttpError from 'http-errors';
 // import { Types } from 'mongoose';
+
 import {
   getAllContacts,
   getContactById,
@@ -10,7 +11,7 @@ import {
 import {parsePaginationParams} from '../utils/parsePaginationParams.js';
 import { parseSortParams } from '../utils/parseSortingParams.js';
 import {parseFilterParams} from '../utils/parseFilterParams.js';
-import  {createContactSchema} from '../validation/createContactSchema.js';
+// import  {createContactSchema} from '../validation/createContactSchema.js';
 
 export const getAllContactsController = async (req, res, next) => {
     try {
@@ -47,43 +48,17 @@ export const getAllContactsController = async (req, res, next) => {
     }
   };
 
-  export const createrContactsController = async (req, res, next) => {
-    try {
-        const { body, file } = req; // Отримуємо body та file з запиту
-        const userId = req.user._id;
+  export const createrContactsController = async (req, res) => {
+    const { body, file } = req;
 
-        // Логування для перевірки отриманих даних
-        console.log('File:', file);
-        console.log('Body:', body);
+    const student = await createContacts({ ...body, photo: file }, req.user._id);
 
-        // Валідатор схеми Joi
-        const { error } = createContactSchema.validate(body);
-        if (error) {
-            return res.status(400).json({
-                status: 400,
-                message: "Bad request",
-                data: {
-                    message: "Bad request",
-                    errors: error.details.map((err) => ({
-                        message: err.message,
-                        path: err.path,
-                        type: err.type,
-                        context: err.context
-                    })),
-                },
-            });
-        }
-
-        const contact = await createContacts({ ...body, photo: file }, userId);
-        res.status(201).json({
-            status: 201,
-            message: "Successfully created a contact!",
-            data: contact
-        });
-    } catch (error) {
-        next(error);
-    }
-};
+    res.status(201).json({
+      status: 201,
+      message: `Successfully created a student!`,
+      data: student,
+    });
+  };
   export const deleteContactController = async (req, res, next) => {
     try {
       const { contactId } = req.params;

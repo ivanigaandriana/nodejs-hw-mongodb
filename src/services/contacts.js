@@ -32,9 +32,7 @@ export const getAllContacts = async ({
 
   export const createContacts = async (payload, userId) => {
     const { photo, ...restPayload } = payload;
-
     const photoUrl = photo ? await saveFile(photo) : null;
-
 
     const contact = await ContactsCollection.create({
         ...restPayload,
