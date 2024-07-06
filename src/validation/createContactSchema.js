@@ -24,8 +24,5 @@ export const createContactSchema = Joi.object({
     }),
     isFavourite: Joi.boolean(),
     contactType: Joi.string().valid('personal', 'home', 'work'),
-    userId: Joi.string(),
-    photo: Joi.any(),
 
 });
-

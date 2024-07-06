@@ -1,6 +1,6 @@
-// import createHttpError from "http-errors";
+
 import { SORT_ORDER } from "../constans/index.js";
-import{ContactsCollection }from "../db/Models/Contact.js";
+import{Contacts }from "../db/Models/Contact.js";
 import { calculatePaginationData } from "../utils/calculatePaginationData.js";
 import { saveFile } from "../utils/saveFile.js";
 
@@ -14,10 +14,10 @@ export const getAllContacts = async ({
   }) => {
     const limit = perPage;
     const skip = (page - 1) * perPage;
-    const contactsQuery = ContactsCollection.find({  userId });
+    const contactsQuery = Contacts.find({  userId });
 
     const [contactsCount, contacts] = await Promise.all([
-      ContactsCollection.countDocuments({  userId }),
+      Contacts.countDocuments({  userId }),
       contactsQuery.skip(skip).limit(limit).sort({ [sortBy]: sortOrder }).exec()
     ]);
 
@@ -26,27 +26,27 @@ export const getAllContacts = async ({
   };
 
   export const getContactById = async (contactId, userId) => {
-    const contact = await ContactsCollection.findOne({ _id: contactId,  userId });
+    const contact = await Contacts.findOne({ _id: contactId,  userId });
     return contact;
   };
 
-  export const createContacts = async (payload, userId) => {
-    const { photo, ...restPayload } = payload;
+  export const createContacts = async ({photo, ...payload}, userId) => {
+    // const { photo, ...restPayload } = payload;
 
-    const photoUrl = photo ? await saveFile(photo) : null;
+    // const photoUrl = photo ? await saveFile(photo) : null;
+const url =await saveFile(photo);
 
-
-    const contact = await ContactsCollection.create({
-        ...restPayload,
+    const contact = await Contacts.create({
+        ...payload,
         userId,
-        photo: photoUrl
+        photo: url
     });
 
     return contact;
 };
 
   export const deleteContact = async (contactId, userId) => {
-    const contact = await ContactsCollection.findOneAndDelete({ _id: contactId,  userId });
+    const contact = await Contacts.findOneAndDelete({ _id: contactId,  userId });
     return contact;
   };
 
@@ -65,7 +65,7 @@ export const getAllContacts = async ({
         const photoUrl = await saveFile(photo);
         updateFields.photo = photoUrl;
     }
-    const updatedContact = await ContactsCollection.findByIdAndUpdate(contactId, updateFields, { new: true });
+    const updatedContact = await Contacts.findByIdAndUpdate(contactId, updateFields, { new: true });
 
     return updatedContact;
 };
