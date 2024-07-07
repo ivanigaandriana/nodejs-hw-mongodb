@@ -5,8 +5,8 @@ import { calculatePaginationData } from "../utils/calculatePaginationData.js";
 import { saveFile } from "../utils/saveFile.js";
 
 import { env } from "../utils/evn.js";
-import saveFileToLocalStorage from "../utils/saveFileToLocalStorage.js";
-import saveFileToCloudinary from "../utils/saveFileToCloudinary.js";
+import {saveFileToLocalStorage} from "../utils/saveFileToLocalStorage.js";
+import {saveFileToCloudinary} from "../utils/saveFileToCloudinary.js";
 import { ENV_VARS } from "../constans/index.js";
 
 export const getAllContacts = async ({
