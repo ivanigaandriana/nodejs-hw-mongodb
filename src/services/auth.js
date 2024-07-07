@@ -4,7 +4,7 @@ import bcrypt from "bcrypt";
 import crypto from "crypto";
 import { Sessions } from "../db/Models/session.js";
 import jwt from "jsonwebtoken";
-import { ENV_VARS ,EMAIL_VARS,TEMPLATER_DIR} from "../constans/index.js";
+import { ENV_VARS ,TEMPLATER_DIR} from "../constans/index.js";
 import { env } from "../utils/evn.js";
 import { sendEmail } from "../utils/sendEmail.js";
 import handlebars from "handlebars";
