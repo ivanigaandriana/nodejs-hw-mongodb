@@ -66,7 +66,7 @@ export const refreshSession = async ({ sessionId, sessionToken }) => {
     const newSession = await createSession(); // Викликаємо функцію createSession
     return await Sessions.create({ userId: user._id, ...newSession });
 };
-export const reguestResetToken = async (email) => {
+export const reguestResetToken = async (email,fromEmail) => {
     const user = await User.findOne({ email });
 
   if (!user) {
@@ -102,7 +102,8 @@ export const reguestResetToken = async (email) => {
 
   try {
     await sendEmail({
-      from: env(EMAIL_VARS.SMTP_FROM),
+      from:fromEmail,
+      //  env(EMAIL_VARS.SMTP_FROM),
       to: email,
       subject: 'Reset your password',
       html,
