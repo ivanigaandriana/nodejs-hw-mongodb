@@ -4,12 +4,13 @@ import bcrypt from "bcrypt";
 import crypto from "crypto";
 import { Sessions } from "../db/Models/session.js";
 import jwt from "jsonwebtoken";
-import { ENV_VARS ,TEMPLATER_DIR} from "../constans/index.js";
+import { ENV_VARS ,TEMPLATER_DIR,EMAIL_VARS} from "../constans/index.js";
 import { env } from "../utils/evn.js";
 import { sendEmail } from "../utils/sendEmail.js";
 import handlebars from "handlebars";
 import fs from "fs";
 import path from "path";
+
 const createSession = async () => {
     return {
         accessToken: crypto.randomBytes(20).toString('base64'),
@@ -66,7 +67,7 @@ export const refreshSession = async ({ sessionId, sessionToken }) => {
     const newSession = await createSession(); // Викликаємо функцію createSession
     return await Sessions.create({ userId: user._id, ...newSession });
 };
-export const reguestResetToken = async (email,fromEmail) => {
+export const reguestResetToken = async (email) => {
     const user = await User.findOne({ email });
 
   if (!user) {
@@ -102,8 +103,8 @@ export const reguestResetToken = async (email,fromEmail) => {
 
   try {
     await sendEmail({
-      from:fromEmail,
-      //  env(EMAIL_VARS.SMTP_FROM),
+      from:
+       env(EMAIL_VARS.SMTP_FROM),
       to: email,
       subject: 'Reset your password',
       html,
