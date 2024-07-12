@@ -10,14 +10,28 @@ import { sendEmail } from "../utils/sendEmail.js";
 import handlebars from "handlebars";
 import fs from "fs";
 import path from "path";
+import{ getFullNameFromGoogle,validateCode} from '../utils/GoogleOAuth.js';
 
+// const createSession = async () => {
+//     return {
+//         accessToken: crypto.randomBytes(20).toString('base64'),
+//         refreshToken: crypto.randomBytes(20).toString('base64'),
+//         accessTokenValidUntil: new Date(Date.now() + 1000 * 60 * 15),  // 15 хвилин
+//         refreshTokenValidUntil: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30),  // 30 днів
+//     };
+// };
 const createSession = async () => {
-    return {
-        accessToken: crypto.randomBytes(20).toString('base64'),
-        refreshToken: crypto.randomBytes(20).toString('base64'),
-        accessTokenValidUntil: new Date(Date.now() + 1000 * 60 * 15),  // 15 хвилин
-        refreshTokenValidUntil: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30),  // 30 днів
-    };
+  const accessToken = crypto.randomBytes(20).toString("base64");
+  const refreshToken = crypto.randomBytes(20).toString("base64");
+  const accessTokenValidUntil = Date.now() + 1000 * 60 * 15;  // 15 хвилин
+  const refreshTokenValidUntil = Date.now() + 1000 * 60 * 60 * 24 * 30;  // 30 днів
+
+  return {
+    accessToken,
+    refreshToken,
+    accessTokenValidUntil,
+    refreshTokenValidUntil,
+  };
 };
 export const createUser = async (payload) => {
     const haschedPassword = await bcrypt.hash(payload.password, 10);
@@ -129,4 +143,41 @@ if(!user){
 }
 const haschedPassword = await bcrypt.hash(payload.password, 10);
 await User.updateOne({ _id: user._id }, { password: haschedPassword });
+};
+// export const loginOrSignUpGoogle = async (code) => {
+//   const loginTicket = await validateCode(code);
+//   const payload =  loginTicket.payload;
+//   if(!payload) throw createHttpError(401);
+//   let user = await User.findOne({ email: payload.email });
+//   if(!user) {
+//     const password = await bcrypt.hash(crypto.randomBytes(10), 10);
+//     user = await User.create({
+//       name:  getFullNameFromGoogle(payload),
+//       email: payload.email,
+//       password,
+
+//     });}
+//     await Sessions.deleteOne({ userId: user._id });
+//     return await Sessions.create({ userId: user._id, ...createSession(),});
+//   };
+
+export const loginOrSignUpGoogle = async (code) => {
+  const loginTicket = await validateCode(code);
+  const payload = loginTicket.payload;
+  if (!payload) throw createHttpError(401);
+
+  let user = await User.findOne({ email: payload.email });
+  if (!user) {
+    const password = await bcrypt.hash(crypto.randomBytes(10).toString('hex'), 10); // Змінив на toString('hex')
+    user = await User.create({
+      name: getFullNameFromGoogle(payload),
+      email: payload.email,
+      password,
+    });
+  }
+
+  await Sessions.deleteOne({ userId: user._id });
+
+  const sessionData = await createSession(); // Отримуємо об'єкт сесії з усіма необхідними полями
+  return await Sessions.create({ userId: user._id, ...sessionData });
 };

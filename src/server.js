@@ -3,7 +3,7 @@ import cors from 'cors';
 import pino from 'pino-http';
 import {env} from './utils/evn.js';
 import { ENV_VARS, UPLOAD_DIR } from './constans/index.js';
-
+import {swaggerDocs} from './middlewares/swaggerOuts.js';
 import rootRouter from './routers/index.js';
 import  errorHandlerMiddleware from './middlewares/errorHandlerMiddlever.js';
 import  notFoundMiddleware from './middlewares/notRoundMidlewer.js';
@@ -19,7 +19,7 @@ app.use(cookieParser());
 app.use(pino({transport:{target:'pino-pretty'}}));
 
 app.use('/uploads',express.static(UPLOAD_DIR));
-
+app.use('/api-docs', swaggerDocs());
 app.use(rootRouter);
 app.use('*',notFoundMiddleware);
 app.use(errorHandlerMiddleware);

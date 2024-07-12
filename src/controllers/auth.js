@@ -1,5 +1,6 @@
-import { createUser, loginUser, logoutUser, refreshSession,reguestResetToken, resetPassword } from '../services/auth.js';
+import { createUser, loginUser, logoutUser, refreshSession,reguestResetToken, resetPassword, loginOrSignUpGoogle } from '../services/auth.js';
 import createHttpError from 'http-errors';
+import { generateOAuthUrl} from '../utils/GoogleOAuth.js';
 const setupCookies = (res, session) => {
     res.cookie('sessionId', session._id, {
         httpOnly: true,
@@ -76,4 +77,23 @@ res.json({
     status: 200,
     message: "Password has been successfully reset.",
 data:{},});
+};
+export const getOAuthUrlController = async (req, res) => {
+    const url= generateOAuthUrl();
+    res.json({
+        status: 200,
+        message: "Successfully get Google OAuth url!",
+        data: {url},
+    });
+};
+export const loginAuthController = async (req, res) => {
+    const session = await loginOrSignUpGoogle(req.body.code);
+    setupCookies(res, session);
+    res.json({
+        status: 200,
+        message: "Google auth has been successfully generated.",
+        data: {
+            accessToken: session.accessToken,
+        },
+    });
 };
