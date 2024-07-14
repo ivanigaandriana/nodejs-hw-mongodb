@@ -74,7 +74,7 @@ responses:
                 data:
                   type: array
                   items:
-                    $ref: contactsId\get.yaml
+                    $ref: ..\..\conponents\schemas\contacts.yaml
                 page:
                   type: number
                   example: 2

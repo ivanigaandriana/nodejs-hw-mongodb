@@ -14,7 +14,7 @@
         "url": "http://localhost:3000"
       },
       {
-        "url": "https://contacts-app-x5ll.onrender.com"
+        "url": "https://hw7-swagger-96e8.onrender.com"
       }
     ],
     "tags": [
@@ -48,9 +48,7 @@
                   "type": "object",
                   "required": [
                     "name",
-                    "phoneNumber",
-                    "email",
-                    "contactType"
+                    "phoneNumber"
                   ],
                   "properties": {
                     "name": {
@@ -81,11 +79,6 @@
                         "home",
                         "personal"
                       ]
-                    },
-                    "userId": {
-                      "description": "Contact's user id",
-                      "type": "string",
-                      "example": "65e4decdd286b30065d54af9"
                     },
                     "photo": {
                       "description": "Link to contact's photo",

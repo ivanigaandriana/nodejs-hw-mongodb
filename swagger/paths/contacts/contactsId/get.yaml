@@ -12,7 +12,7 @@ parameters:
     schema:
       type: string
       example: '668e58ab394350d27d87e281'
-  responses:
+responses:
   '200':
     description: 'Get contact by id'
     content:
