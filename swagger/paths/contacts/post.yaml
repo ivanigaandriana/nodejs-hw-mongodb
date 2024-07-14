@@ -13,8 +13,6 @@ requestBody:
         required:
           - name
           - phoneNumber
-          - email
-          - contactType
         properties:
           name:
             description: "Contact's name"
@@ -36,10 +34,10 @@ requestBody:
               description: "Contact's type"
               type: string
               enum: ['work', 'home', 'personal']
-          userId:
-              description: "Contact's user id"
-              type: string
-              example: 668e58ab394350d27d87e281
+          # userId:
+          #     description: "Contact's user id"
+          #     type: string
+          #     example: 668e58ab394350d27d87e281
           photo:
               description: "Link to contact's photo"
               type: string

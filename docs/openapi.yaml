@@ -14,7 +14,7 @@ tags:
     description: Authorization operations
 servers:
   - url: http://localhost:3000
-  - url: https://contacts-app-x5ll.onrender.com
+  - url: https://hw7-swagger-96e8.onrender.com
 paths:
   /contacts/{contactId}:
     get:
