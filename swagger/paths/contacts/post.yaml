@@ -1,3 +1,70 @@
+# tags:
+#   - Contacts
+# summary: Create contact
+# operationId: createContact
+# description: 'Create a contact with payload'
+# security:
+#   - bearerAuth: []
+# requestBody:
+#   content:
+#     multipart/form-data:
+#       schema:
+#         type: object
+#         required:
+#           - name
+#           - phoneNumber
+#         properties:
+#           name:
+#             description: "Contact's name"
+#             type: string
+#             example: 'andriana'
+#           phoneNumber:
+#               description: "Contact's phoneNumber"
+#               type: string
+#               example: '380984562351'
+#           email:
+#               description: "Contact's email"
+#               type: string
+#               example: 'vladislavapelhants@gmail.com'
+#           isFavourite:
+#               description: 'Contact is favourite'
+#               type: boolean
+#               example: false
+#           contactType:
+#               description: "Contact's type"
+#               type: string
+#               enum: ['work', 'home', 'personal']
+#           # userId:
+#           #     description: "Contact's user id"
+#           #     type: string
+#           #     example: 668e58ab394350d27d87e281
+#           photo:
+#               description: "Link to contact's photo"
+#               type: string
+#               example: <https://res.cloudinary.com/uqwgdu/image/upload/image.png>
+# responses:
+#   '201':
+#     description: Creates a contact!
+#     content:
+#       application/json:
+#         schema:
+#           type: object
+#           required:
+#             - status
+#             - message
+#             - data
+#           properties:
+#             status:
+#               type: integer
+#               example: 201
+#             message:
+#               type: string
+#               example: Successfully created a contact!
+#             data:
+#               type: object
+#               $ref: ..\..\conponents\schemas\contacts.yaml
+#   '401':
+#     $ref: ..\..\conponents\responces\401.yaml
 tags:
   - Contacts
 summary: Create contact
@@ -19,7 +86,7 @@ requestBody:
             type: string
             example: 'andriana'
           phoneNumber:
-              description: "Contact's phoneNumber"
+              description: "Contact's phone number"
               type: string
               example: '380984562351'
           email:
@@ -34,14 +101,10 @@ requestBody:
               description: "Contact's type"
               type: string
               enum: ['work', 'home', 'personal']
-          # userId:
-          #     description: "Contact's user id"
-          #     type: string
-          #     example: 668e58ab394350d27d87e281
           photo:
-              description: "Link to contact's photo"
+              description: "Contact's photo"
               type: string
-              example: <https://res.cloudinary.com/uqwgdu/image/upload/image.png>
+              format: binary
 responses:
   '201':
     description: Creates a contact!

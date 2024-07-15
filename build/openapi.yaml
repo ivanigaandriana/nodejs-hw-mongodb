@@ -374,21 +374,21 @@ components:
           type: string
           example: <https://res.cloudinary.com/uqwgdu/image/upload/image.png>
     get:
-      tags:
-        - Contacts
-      summary: Get contact by id
-      operationId: getContactById
-      description: Get contact by id
-      security:
-        - bearerAuth: []
-      parameters:
-        - in: path
+        tags:
+         - Contacts
+        summary: Get contact by id
+        operationId: getContactById
+        description: Get contact by id
+        security:
+         - bearerAuth: []
+        parameters:
+         - in: path
           name: contactId
           required: true
           schema:
             type: string
             example: 668e58ab394350d27d87e281
-      responses:
+        responses:
         '200':
           description: Get contact by id
           content:
