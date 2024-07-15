@@ -30,27 +30,42 @@ export const getAllContacts = async ({
     return contact;
   };
 
-  export const createContacts = async ({photo, ...payload}, userId) => {
-    // const { photo, ...restPayload } = payload;
+//   export const createContacts = async ({photo, ...payload}, userId) => {
+//     // const { photo, ...restPayload } = payload;
 
-    // const photoUrl = photo ? await saveFile(photo) : null;
-const url =await saveFile(photo);
+//     // const photoUrl = photo ? await saveFile(photo) : null;
+// const url =await saveFile(photo);
+
+//     const contact = await Contacts.create({
+//         ...payload,
+//         userId,
+//         photo: url
+//     });
+
+//     return contact;
+// };
+export const createContacts = async ({ photo, ...payload }, userId) => {
+  try {
+    const photoUrl = photo ? await saveFile(photo) : null;
 
     const contact = await Contacts.create({
-        ...payload,
-        userId,
-        photo: url
+      ...payload,
+      userId,
+      photo: photoUrl
     });
 
     return contact;
+  } catch (error) {
+    console.error('Error in createContacts:', error);
+    throw new Error('Failed to create contact');
+  }
 };
-
   export const deleteContact = async (contactId, userId) => {
     const contact = await Contacts.findOneAndDelete({ _id: contactId,  userId });
     return contact;
   };
 
- 
+
   export const updateContact = async (contactId, payload) => {
     const { photo, ...restPayload } = payload;
     const updateFields = { ...restPayload };

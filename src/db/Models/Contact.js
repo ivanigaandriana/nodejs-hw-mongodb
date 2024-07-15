@@ -16,7 +16,7 @@ import {Schema, model} from "mongoose";
  export const contactModel = new Schema({
     name:{type: String, required: true},
     phoneNumber:{type: String, required: true},
-    email:{type: String},
+    email:{type: String, required: true },
     isFavourite:{type: Boolean, default: false,},
     contactType:{type: String,  default: "personal", enum: ["personal", "home", "work"]},
     userId: { type: Schema.Types.ObjectId,  },

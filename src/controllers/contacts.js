@@ -156,16 +156,39 @@ export const getAllContactsController = async (req, res, next) => {
     }
   };
 
+  // export const createrContactsController = async (req, res) => {
+  //   const { body, file } = req;
+
+  //   const student = await createContacts({ ...body, photo: file }, req.user._id);
+
+  //   res.status(201).json({
+  //     status: 201,
+  //     message: `Successfully created a student!`,
+  //     data: student,
+  //   });
+  // };
   export const createrContactsController = async (req, res) => {
-    const { body, file } = req;
+    try {
+      const { body, file } = req;
 
-    const student = await createContacts({ ...body, photo: file }, req.user._id);
+      console.log('Received body:', body);
+      console.log('Received file:', file);
 
-    res.status(201).json({
-      status: 201,
-      message: `Successfully created a student!`,
-      data: student,
-    });
+      const student = await createContacts({ ...body, photo: file }, req.user._id);
+
+      res.status(201).json({
+        status: 201,
+        message: 'Successfully created a student!',
+        data: student,
+      });
+    } catch (error) {
+      console.error('Error in createrContactsController:', error);
+      res.status(500).json({
+        status: 500,
+        message: 'Failed to create contact',
+        data: {}
+      });
+    }
   };
   export const deleteContactController = async (req, res, next) => {
     try {
